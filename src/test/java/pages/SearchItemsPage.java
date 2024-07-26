@@ -47,13 +47,10 @@ public class SearchItemsPage extends BaseClass{
 	
 	public void add_item_to_cart(String item, String item_name, String size, String colour, int quant) throws InterruptedException
 		{
-		System.out.println("Quantity: "+quant);
-		System.out.println("Title: "+driver.getTitle());
 		Thread.sleep(2000);
 		driver.findElement(search_box).sendKeys(item);
 		driver.findElement(search_button).click();
 		Thread.sleep(2000);
-		System.out.println("Item name: "+item_name);
 		select_item_details(item_name, size, colour, quant);
 		driver.findElement(add_to_cart).click();
 		}

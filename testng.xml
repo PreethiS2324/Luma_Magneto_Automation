@@ -5,6 +5,7 @@
 	<classes>
       <class name="testcases.Login"/>
       <class name="testcases.SearchItems"/>
+      <class name="testcases.OrderWatches"/>
     </classes>
 	
   </test> <!-- Test -->

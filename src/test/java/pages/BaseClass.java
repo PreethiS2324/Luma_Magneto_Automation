@@ -7,8 +7,8 @@ import weddriver_class.DriverManager;
 public class BaseClass {
 
 	 protected WebDriver driver;
-
 	    public BaseClass() {
 	        this.driver = DriverManager.getDriver();
 	    }
+	    
 }

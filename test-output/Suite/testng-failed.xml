@@ -5,7 +5,7 @@
     <classes>
       <class name="testcases.SearchItems">
         <methods>
-          <include name="checkout_items_in_cart"/>
+          <include name="get_items_in_cart"/>
           <include name="setUpSuite"/>
           <include name="tearDownSuite"/>
         </methods>

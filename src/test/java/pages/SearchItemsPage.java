@@ -43,27 +43,25 @@ public class SearchItemsPage extends BaseClass{
 	By ship_here = By.xpath("//span[contains(text(),'Ship here')]");
 	By view_and_edit_cart = By.xpath("//span[contains(text(),'View and Edit Cart')]");
 	By cart_items= By.xpath("//div[@class='cart table-wrapper']//tbody");
+	By add_to_wishlist = By.xpath("//span[contains(text(),'Add to Wish List')]");	
 	
-	
-	public void add_item_to_cart(String item, String item_name, String size, String colour, int quant) throws InterruptedException
+	public void add_item_to_cart(String item, String item_name, String size, String colour, int quant)
 		{
-		Thread.sleep(2000);
 		driver.findElement(search_box).sendKeys(item);
 		driver.findElement(search_button).click();
-		Thread.sleep(2000);
 		select_item_details(item_name, size, colour, quant);
 		driver.findElement(add_to_cart).click();
 		}
 	
 	public ArrayList<String> items_in_cart() throws Exception
 	{
-		driver.findElement(cart).click();
 		Thread.sleep(2000);
+		driver.findElement(cart).click();
 		List<WebElement> items = driver.findElements(items_in_cart);
 		ArrayList<String> item_names = new ArrayList<String>();
 		for(int i=1; i<=items.size();i++)
 		{
-			String item1 = driver.findElement(By.xpath("//ol[@id='mini-cart']//li//strong/a["+i+"]")).getText();
+			String item1 = driver.findElement(By.xpath("//ol[@id='mini-cart']//li["+i+"]//strong/a[1]")).getText();
 			item_names.add(item1);
 			
 		}
@@ -85,7 +83,7 @@ public class SearchItemsPage extends BaseClass{
 		
 		select_item_details(item_name,size,colour,quant);
 		driver.findElement(add_to_cart).click();
-		checkout_an_item_in_cart(item_name);
+		//checkout_an_item_in_cart(item_name);
 		
 		
 		}
@@ -114,24 +112,20 @@ public class SearchItemsPage extends BaseClass{
 		sort.selectByVisibleText(value);
 	}
 	
-	public void checkout_allitems_in_cart() throws Exception
+	public void checkout_allitems_in_cart_with_existing_address()
 	{
-		System.out.println("Clicking on cart");
-		Thread.sleep(3000);
 		driver.findElement(cart).click();
 		driver.findElement(proceed_to_checkout).click();
-		Thread.sleep(3000);
 		driver.findElement(next_button).click();
-		Thread.sleep(3000);
 		driver.findElement(place_order_button).click();
 		boolean order_placed = driver.findElement(thanks_message).isDisplayed();
 		assertTrue(order_placed,"Order Placed Successfully");
 		
 	}
 	
-	public void checkout_allitems_in_cart(String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws Exception
+	public void checkout_allitems_in_cart(String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws InterruptedException
 	{
-		Thread.sleep(2000);
+		Thread.sleep(3000);
 		driver.findElement(cart).click();
 		driver.findElement(proceed_to_checkout).click();
 		if(user_type.equals("New"))
@@ -158,10 +152,8 @@ public class SearchItemsPage extends BaseClass{
 		sel_state.selectByVisibleText(state);
 		driver.findElement(city).sendKeys(city_name);
 		String zip = Long.toString(zipcode);
-		System.out.println("Zipcode:"+zip);
 		driver.findElement(postcode).sendKeys(zip);
 		String ph = Long.toString(phone);
-		System.out.println("Phone: "+ph);
 		driver.findElement(phoneNumber).sendKeys(ph);
 		
 	}
@@ -172,25 +164,38 @@ public class SearchItemsPage extends BaseClass{
 		driver.findElement(ship_here).click();
 	}
 	
-	public void checkout_an_item_in_cart(String item_name) throws Exception
+	public void checkout_an_item_in_cart(String item_name,String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws InterruptedException
 	{
 		driver.findElement(cart).click();
 		driver.findElement(view_and_edit_cart).click();
 		int count = driver.findElements(cart_items).size();
-		for(int i=1;i<=count;i++)
+		for(int i=count;i<=count;i--)
 		{
-			String name = driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//td//a[contains(text(),'"+item_name+"')]")).getText();
+			if(i!=0) {
+			String name = driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//td//strong/a")).getText();
 			if(name.equals(item_name))
 			{
 				continue;
 			}
 			else
-				driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//tr[@class='item-actions']//a[@title='Remove item']"));
+				{driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//tr[@class='item-actions']//a[@title='Remove item']")).click();
+				}
+			}
+			else
+				break;
 		}
-		checkout_allitems_in_cart();
+		checkout_allitems_in_cart(user_type, address_type, address, country, state, city_name, zipcode, phone);
 	}
 
 	
+	public void add_item_to_wishlist(String item, String item_name, String size, String colour, int quant)
+	{
+	driver.findElement(search_box).sendKeys(item);
+	driver.findElement(search_button).click();
+	select_item_details(item_name, size, colour, quant);
+	driver.findElement(add_to_wishlist).click();
+	}
+
 	
 	
 }

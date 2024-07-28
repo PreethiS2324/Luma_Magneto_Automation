@@ -4,21 +4,24 @@ import org.testng.annotations.Test;
 
 import pages.Address;
 import pages.ConfigReader;
-import pages.LoginPage;
-import pages.OrderWatchesPage;
+import pages.Order_Tops_And_BottomsPage;
 
-public class OrderWatches extends BaseTest{
+public class OrderTops_And_Bottoms extends BaseTest {
 	
 	ConfigReader configReader = new ConfigReader();
-	OrderWatchesPage order = new OrderWatchesPage();
+	Order_Tops_And_BottomsPage order = new Order_Tops_And_BottomsPage();
 	String path =  configReader.getProperty("filePath");
 	private Address address;
-	LoginPage login = new LoginPage();
+	
+	String item_name = configReader.getProperty("item_name");
+	String color = configReader.getProperty("color");
+	String quantity = configReader.getProperty("quantity");
+	String size = configReader.getProperty("size");
+
 	
 	@Test
-	public void order_watches() throws InterruptedException{
+	public void order_tops_bottom_item() throws InterruptedException{
 		
-		String watch_name = configReader.getProperty("watch_name");
 		address = new Address(
 				configReader.getProperty("street"),
 	            configReader.getProperty("city"),
@@ -27,9 +30,10 @@ public class OrderWatches extends BaseTest{
 	            configReader.getProperty("pincode"),
 	            configReader.getProperty("phoneNumber")
 	        );
-		order.add_watch_to_cart(watch_name);
-		order.order_watch(watch_name, address);
+		
+		order.order_item(item_name, size, color, quantity, address);
 	
 	}
+
 	
 }

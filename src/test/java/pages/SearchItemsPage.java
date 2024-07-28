@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
+import org.testng.Assert;
 
 public class SearchItemsPage extends BaseClass{
 	
@@ -44,12 +44,17 @@ public class SearchItemsPage extends BaseClass{
 	By view_and_edit_cart = By.xpath("//span[contains(text(),'View and Edit Cart')]");
 	By cart_items= By.xpath("//div[@class='cart table-wrapper']//tbody");
 	By add_to_wishlist = By.xpath("//span[contains(text(),'Add to Wish List')]");	
+	By quantity_to_order = By.xpath("//input[@class='input-text qty']");
+	By update_cart = By.xpath("//span[contains(text(),'Update Shopping Cart')]");
+	By available_colors= By.xpath("//div[@class='swatch-attribute color']//div[@class='swatch-option color']");
 	
-	public void add_item_to_cart(String item, String item_name, String size, String colour, int quant)
+	ConfigReader configReader = new ConfigReader();
+	
+	public void add_item_to_cart(String item, String item_name, String size, String color, String quant)
 		{
 		driver.findElement(search_box).sendKeys(item);
 		driver.findElement(search_button).click();
-		select_item_details(item_name, size, colour, quant);
+		select_item_details(item_name, size, color, quant);
 		driver.findElement(add_to_cart).click();
 		}
 	
@@ -68,7 +73,7 @@ public class SearchItemsPage extends BaseClass{
 		return item_names;
 	}
 	
-	public void order_item_from_menu(String gender, String category, String item_name, String size, String colour, int quant) throws Exception
+	public void order_item_from_menu(String gender, String category, String item_name, String size, String color, String quant,Address address) throws Exception
 	{
 		if(gender.equals("Male"))
 			driver.findElement(By.xpath("//div[@class='section-items nav-sections-items']//nav[@class='navigation']/ul/li[3]")).click();
@@ -81,22 +86,42 @@ public class SearchItemsPage extends BaseClass{
 		else
 			driver.findElement(men_bottoms).click();
 		
-		select_item_details(item_name,size,colour,quant);
+		select_item_details(item_name,size,color,quant);
 		driver.findElement(add_to_cart).click();
-		//checkout_an_item_in_cart(item_name);
+		
+		checkout_an_item_in_cart(item_name,address);
 		
 		
 		}
 	
-	public void select_item_details(String item_name, String size, String colour, int quant)
+	public void select_item_details(String item_name, String size, String color, String quant)
 	{
 		try {
 			
 			driver.findElement(By.xpath("//div[@class='products wrapper grid products-grid']/ol/li//a[contains(text(),'"+item_name+"')]")).click();
+			
 			driver.findElement(By.xpath("//div[@option-label='"+size+"']")).click();
-			driver.findElement(By.xpath("//div[@option-label='"+colour+"']")).click();	
+			int colors = driver.findElements(By.xpath("//div[@class='swatch-attribute color']//div[@class='swatch-option color']")).size();
+			int color_1=0;
+			for(int i=1;i<=colors;i++)
+			{
+				String get_color = driver.findElement(By.xpath("//div[@option-label='"+color+"']")).getText();
+				System.out.println("color: "+get_color);
+				if(get_color.equals(color))
+				{
+					driver.findElement(By.xpath("//div[@option-label='"+color+"']")).click();
+					color_1=1;
+					break;
+				}
+				else
+					continue;			
+			}
+			if(color_1==0)
+			{
+				Assert.assertTrue(true, "The color is not available.");	        
+			}
 			driver.findElement(quantity).clear();
-			driver.findElement(quantity).sendKeys(Integer.toString(quant));
+			driver.findElement(quantity).sendKeys(quant);
 		}
 
 		catch(Exception e)
@@ -123,50 +148,49 @@ public class SearchItemsPage extends BaseClass{
 		
 	}
 	
-	public void checkout_allitems_in_cart(String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws InterruptedException
+	public void checkout_allitems_in_cart(Address address) throws InterruptedException
 	{
 		Thread.sleep(3000);
 		driver.findElement(cart).click();
 		driver.findElement(proceed_to_checkout).click();
-		if(user_type.equals("New"))
-				{
-				add_address(address,country,state,city_name,zipcode,phone);}
-		else if(address_type.equals("New"))
+		String user_type = configReader.getProperty("user_type");
+		String address_type = configReader.getProperty("address_type");
+		if(user_type.equals("New") )
 		{
-			add_new_address(address,country,state,city_name,zipcode,phone);
+			add_adress(address);
+		}
+		else if(address_type.equals("New"))
+		{		
+			Thread.sleep(2000);
+			driver.findElement(add_address).click();
+			add_adress(address);
+			driver.findElement(ship_here).click();	
 		}		
 		driver.findElement(next_button).click();
+		Thread.sleep(3000);
 		driver.findElement(place_order_button).click();
+		Thread.sleep(2000);
 		boolean order_placed = driver.findElement(thanks_message).isDisplayed();
 		assertTrue(order_placed,"Order Placed Successfully");
 		
 	}
-	
-
-	public void add_address(String address, String country, String state, String city_name, long zipcode,long phone)
-	{
-		driver.findElement(street_address1).sendKeys(address);
-		Select sel_country = new Select(driver.findElement(country_dropdown));
-		sel_country.selectByVisibleText(country);
-		Select sel_state = new Select(driver.findElement(state_dropdown));
-		sel_state.selectByVisibleText(state);
-		driver.findElement(city).sendKeys(city_name);
-		String zip = Long.toString(zipcode);
-		driver.findElement(postcode).sendKeys(zip);
-		String ph = Long.toString(phone);
-		driver.findElement(phoneNumber).sendKeys(ph);
+		public void add_adress(Address address) {
 		
-	}
-	public void add_new_address(String address, String country, String state, String city_name, long zipcode,long phone)
-	{
-		driver.findElement(add_address).click();
-		add_address(address,country,state,city_name,zipcode,phone);
-		driver.findElement(ship_here).click();
-	}
-	
-	public void checkout_an_item_in_cart(String item_name,String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws InterruptedException
+		driver.findElement(street_address1).sendKeys(address.getAddress());
+		Select sel_country = new Select(driver.findElement(country_dropdown));
+		sel_country.selectByVisibleText(address.getCountry());
+		Select sel_state = new Select(driver.findElement(state_dropdown));
+		sel_state.selectByVisibleText(address.getState());
+		driver.findElement(city).sendKeys(address.getCity());
+		driver.findElement(postcode).sendKeys(address.getPincode());
+		driver.findElement(phoneNumber).sendKeys(address.getPhoneNumber());
+		
+    
+    }
+	public void checkout_an_item_in_cart(String item_name,Address address) throws InterruptedException
 	{
 		driver.findElement(cart).click();
+		Thread.sleep(2000);
 		driver.findElement(view_and_edit_cart).click();
 		int count = driver.findElements(cart_items).size();
 		for(int i=count;i<=count;i--)
@@ -174,25 +198,26 @@ public class SearchItemsPage extends BaseClass{
 			if(i!=0) {
 			String name = driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//td//strong/a")).getText();
 			if(name.equals(item_name))
-			{
 				continue;
-			}
 			else
-				{driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//tr[@class='item-actions']//a[@title='Remove item']")).click();
-				}
+				driver.findElement(By.xpath("//div[@class='cart table-wrapper']//tbody["+i+"]//tr[@class='item-actions']//a/span[contains(text(),'Move to Wishlist')]")).click();			
 			}
 			else
 				break;
 		}
-		checkout_allitems_in_cart(user_type, address_type, address, country, state, city_name, zipcode, phone);
+		driver.findElement(quantity_to_order).clear();
+		String quan_to_order = configReader.getProperty("quantity_to_order");
+		driver.findElement(quantity_to_order).sendKeys(quan_to_order);
+		driver.findElement(update_cart).click();
+		checkout_allitems_in_cart(address);
 	}
 
 	
-	public void add_item_to_wishlist(String item, String item_name, String size, String colour, int quant)
+	public void add_item_to_wishlist(String item, String item_name, String size, String color, String quant)
 	{
 	driver.findElement(search_box).sendKeys(item);
 	driver.findElement(search_button).click();
-	select_item_details(item_name, size, colour, quant);
+	select_item_details(item_name, size, color, quant);
 	driver.findElement(add_to_wishlist).click();
 	}
 

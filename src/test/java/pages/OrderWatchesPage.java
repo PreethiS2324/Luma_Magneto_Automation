@@ -23,9 +23,9 @@ public class OrderWatchesPage extends BaseClass{
 		driver.findElement(add_to_cart).click();
 		}
 	
-	public void order_watch(String watch_name,String user_type,String address_type,String address, String country, String state, String city_name, long zipcode,long phone) throws InterruptedException 
+	public void order_watch(String watch_name,Address address) throws InterruptedException 
 	{
-		search.checkout_an_item_in_cart(watch_name, user_type, address_type, address, country, state, city_name, zipcode, phone);
+		search.checkout_an_item_in_cart(watch_name,address);
 	
 	}
 	

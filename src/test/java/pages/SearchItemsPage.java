@@ -2,11 +2,7 @@ package pages;
 
 import static org.testng.Assert.assertTrue;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.Select;
 import org.testng.Assert;
 
@@ -47,31 +43,18 @@ public class SearchItemsPage extends BaseClass{
 	By quantity_to_order = By.xpath("//input[@class='input-text qty']");
 	By update_cart = By.xpath("//span[contains(text(),'Update Shopping Cart')]");
 	By available_colors= By.xpath("//div[@class='swatch-attribute color']//div[@class='swatch-option color']");
+	By next_page = By.xpath("//li[@class='item pages-item-next']");
+	By no_of_pages = By.xpath("//div[@class='pages']//li[@class='item' or @class='item current']");
 	
 	ConfigReader configReader = new ConfigReader();
+	String item_type = configReader.getProperty("item_type");
+	OrderItemsPage order = new OrderItemsPage();
 	
-	public void add_item_to_cart(String item, String item_name, String size, String color, String quant)
+	public void add_item_to_cart(String item, String item_name, String item_type,String size, String color, String quant)
 		{
-		driver.findElement(search_box).sendKeys(item);
-		driver.findElement(search_button).click();
-		select_item_details(item_name, size, color, quant);
+		order.select_tops_bottoms(item_name, item_type,size, color, quant);
 		driver.findElement(add_to_cart).click();
 		}
-	
-	public ArrayList<String> items_in_cart() throws Exception
-	{
-		Thread.sleep(2000);
-		driver.findElement(cart).click();
-		List<WebElement> items = driver.findElements(items_in_cart);
-		ArrayList<String> item_names = new ArrayList<String>();
-		for(int i=1; i<=items.size();i++)
-		{
-			String item1 = driver.findElement(By.xpath("//ol[@id='mini-cart']//li["+i+"]//strong/a[1]")).getText();
-			item_names.add(item1);
-			
-		}
-		return item_names;
-	}
 	
 	public void order_item_from_menu(String gender, String category, String item_name, String size, String color, String quant,Address address) throws Exception
 	{
@@ -94,14 +77,14 @@ public class SearchItemsPage extends BaseClass{
 		
 		}
 	
+	
 	public void select_item_details(String item_name, String size, String color, String quant)
 	{
 		try {
-			
-			driver.findElement(By.xpath("//div[@class='products wrapper grid products-grid']/ol/li//a[contains(text(),'"+item_name+"')]")).click();
-			
-			driver.findElement(By.xpath("//div[@option-label='"+size+"']")).click();
+
+			driver.findElement(By.xpath("//div[@option-label='"+size+"']")).click();	
 			int colors = driver.findElements(By.xpath("//div[@class='swatch-attribute color']//div[@class='swatch-option color']")).size();
+			System.out.println("Colors count: "+colors);
 			int color_1=0;
 			for(int i=1;i<=colors;i++)
 			{
@@ -117,9 +100,7 @@ public class SearchItemsPage extends BaseClass{
 					continue;			
 			}
 			if(color_1==0)
-			{
-				Assert.assertTrue(true, "The color is not available.");	        
-			}
+				Assert.fail("Color is not available");       
 			driver.findElement(quantity).clear();
 			driver.findElement(quantity).sendKeys(quant);
 		}
@@ -220,7 +201,5 @@ public class SearchItemsPage extends BaseClass{
 	select_item_details(item_name, size, color, quant);
 	driver.findElement(add_to_wishlist).click();
 	}
-
-	
 	
 }

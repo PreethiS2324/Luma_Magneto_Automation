@@ -2,7 +2,6 @@ package testcases;
 
 import java.util.ArrayList;
 
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.Test;
 
@@ -11,20 +10,12 @@ import pages.GetDataFromExcel;
 import pages.LoginPage;
 
 
-public class Login {
-
-	public WebDriver driver;
+public class Login extends BaseTest{
 
 	LoginPage login = new LoginPage();
 	ConfigReader configReader = new ConfigReader();
 
-	@Test(enabled=false)
-	public void LaunchURL()
-	{
-		
-		login.EnterURL("https://magento.softwaretestingboard.com");
-	}
-	
+
 	@Test(enabled=false)
 	public void create_account() throws Exception
 	{	
@@ -54,7 +45,7 @@ public class Login {
 		String path = configReader.getProperty("filePath");
 		String sheetName = configReader.getProperty("sheetName1");
 		ArrayList<String> data = GetDataFromExcel.getTestData(path, sheetName);
-	login.sign_in(data.get(0), data.get(1));
+		login.sign_in(data.get(0), data.get(1));
     }
 	
 	@Test(enabled=false)

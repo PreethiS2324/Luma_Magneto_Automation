@@ -1,10 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-
-import testcases.BaseTest;
 
 public class LoginPage extends BaseClass{
 

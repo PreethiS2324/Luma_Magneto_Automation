@@ -5,11 +5,34 @@
     <classes>
       <class name="testcases.SearchItems">
         <methods>
-          <include name="get_items_in_cart"/>
+          <include name="checkout_items_in_cart"/>
+          <include name="address"/>
           <include name="setUpSuite"/>
+          <include name="add_item_to_cart"/>
+          <include name="add_item_to_wishlist"/>
           <include name="tearDownSuite"/>
         </methods>
       </class> <!-- testcases.SearchItems -->
+      <class name="testcases.OrderItems">
+        <methods>
+          <include name="order_tops_bottom"/>
+          <include name="order_fitness_equipment"/>
+          <include name="add_watch_to_wishlist"/>
+          <include name="order_watches"/>
+          <include name="address"/>
+          <include name="setUpSuite"/>
+          <include name="order_bags"/>
+          <include name="add_bag_to_wishlist"/>
+          <include name="add_fitness_equipment_to_wishlist"/>
+          <include name="tearDownSuite"/>
+        </methods>
+      </class> <!-- testcases.OrderItems -->
+      <class name="testcases.Login">
+        <methods>
+          <include name="tearDownSuite"/>
+          <include name="closeBroswer"/>
+        </methods>
+      </class> <!-- testcases.Login -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

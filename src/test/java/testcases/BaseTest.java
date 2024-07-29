@@ -15,7 +15,7 @@ public class BaseTest {
 		    String app_url = configReader.getProperty("URL");
 		    System.out.println("URL from config file : "+app_url);
 	        DriverManager.getDriver().get(app_url);
-	         
+	       
 	    }
 	 
 	    @AfterSuite

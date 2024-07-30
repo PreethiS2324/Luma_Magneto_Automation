@@ -24,17 +24,23 @@ public class GetDetailsPage extends BaseClass {
 	By cart = By.xpath("//a[@class='action showcart']");
 	By items_in_cart = By.xpath("//ol[@id='mini-cart']//li//strong/a");
 	By sale_menu = By.xpath("//a[@role='menuitem']/span[contains(text(),'Sale')]");
+	By cart_list = By.xpath("//ol[@id='mini-cart']/li");
+	By cart_price = By.xpath("//span[@class='price-wrapper']/span");
 	
-	  public String get_account_name_and_email()
+	
+	
+	  public String get_account_name_and_email() throws InterruptedException
 	     {
-	    	 driver.findElement(menu).click();
+	    	Thread.sleep(2000);
+		  driver.findElement(menu).click();
 	    	 driver.findElement(my_account_tab).click();
 	    	 String name_email =driver.findElement(account_info).getText();
 			 return name_email;
 	     }
 	  
-	  public ArrayList<String> get_ordered_items()
+	  public ArrayList<String> get_ordered_items() throws InterruptedException
 	  {
+		  Thread.sleep(2000);
 		  driver.findElement(menu).click();
 		  driver.findElement(my_orders).click();
 		  int total_orders = driver.findElements(orders_items).size();
@@ -49,8 +55,9 @@ public class GetDetailsPage extends BaseClass {
 		  
 	  }
 	  
-	  public ArrayList<String> get_items_in_wishlist()
+	  public ArrayList<String> get_items_in_wishlist() throws InterruptedException
 	  {
+		  Thread.sleep(2000);
 		  driver.findElement(menu).click();
 		  ArrayList<String> wishlist = new ArrayList<String>();
 		  driver.findElement(my_account_tab).click();
@@ -79,14 +86,16 @@ public class GetDetailsPage extends BaseClass {
 		}
 	  
 	  
-	  public ArrayList<String> get_women_deals()
+	  public ArrayList<String> get_women_deals() throws InterruptedException
 	  {
+		  Thread.sleep(2000);
 		  driver.findElement(sale_menu).click();
 		  int total = driver.findElements(By.xpath("//div[@class='categories-menu']//ul[1]/li")).size();
 		  ArrayList<String> women_deals = new ArrayList<String>();
 		  for(int i=1;i<=total;i++)
 		  {
-			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[1]/li["+i+"")).getText();
+			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[1]/li["+i+"]")).getText();
+			  System.out.println("Item: "+item);
 			  women_deals.add(item);
 		  }
 		return women_deals;
@@ -94,14 +103,15 @@ public class GetDetailsPage extends BaseClass {
 	  }
 	  
 	  
-	  public ArrayList<String> get_men_deals()
+	  public ArrayList<String> get_men_deals() throws InterruptedException
 	  {
+		  Thread.sleep(2000);
 		  driver.findElement(sale_menu).click();
 		  int total = driver.findElements(By.xpath("//div[@class='categories-menu']//ul[2]/li")).size();
 		  ArrayList<String> men_deals = new ArrayList<String>();
 		  for(int i=1;i<=total;i++)
 		  {
-			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[2]/li["+i+"")).getText();
+			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[2]/li["+i+"]")).getText();
 			  men_deals.add(item);
 		  }
 		return men_deals;
@@ -115,10 +125,29 @@ public class GetDetailsPage extends BaseClass {
 		  ArrayList<String> gear_deals = new ArrayList<String>();
 		  for(int i=1;i<=total;i++)
 		  {
-			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[3]/li["+i+"")).getText();
+			  String item = driver.findElement(By.xpath("//div[@class='categories-menu']//ul[3]/li["+i+"]")).getText();
 			  gear_deals.add(item);
 		  }
 		return gear_deals;
+		  
+	  }
+	  
+	  
+	  public void remove_all_items_from_cart() throws InterruptedException
+	  {
+		  Thread.sleep(2000);
+		  driver.findElement(cart).click();
+		  int total_items_in_cart = driver.findElements(items_in_cart).size();
+		  for(int i=1;i<=total_items_in_cart;i++)
+		  {
+			  driver.findElement(By.xpath("//ol[@id='mini-cart']/li["+i+"]//div[@class='product actions']//a[@title='Remove item']")).click();
+		  }
+	  }
+	  
+	  public String get_cart_subtotal()
+	  {
+		String cart_subtotal = driver.findElement(cart_price).getText();
+		  return cart_subtotal;
 		  
 	  }
 }

@@ -43,14 +43,14 @@ public class OrderItems extends BaseTest {
 	
 	
 	@Test
-	public void order_tops_bottom() throws InterruptedException{
+	public void order_tops_bottom_TC006() throws InterruptedException{
 		
 		order.order_tops_bottoms(item_name,item_type,size, color, quantity, address);
 	
 	}
 	
 	@Test
-	public void order_watches() throws InterruptedException{
+	public void order_watches_TC007() throws InterruptedException{
 		
 		
 		order.add_watch_to_cart(watch_name);
@@ -60,7 +60,7 @@ public class OrderItems extends BaseTest {
 	
 	
 	@Test
-	public void order_fitness_equipment() throws InterruptedException
+	public void order_fitness_equipment_TC008() throws InterruptedException
 	{
 		order.add_fitness_equipment_to_cart(equipment_name);
 		search.checkout_an_item_in_cart(equipment_name, address);
@@ -68,7 +68,7 @@ public class OrderItems extends BaseTest {
 	
 	
 	@Test
-	public void order_bags() throws InterruptedException
+	public void order_bags_TC009() throws InterruptedException
 	{
 		
 		order.add_bag_to_cart(bag_name);
@@ -77,14 +77,14 @@ public class OrderItems extends BaseTest {
 	
 	
 	@Test
-	public void add_bag_to_wishlist()
+	public void add_bag_to_wishlist_TC010()
 	{
 		order.add_bag_to_wishlist(bag_name);
 	}
 	
 
 	@Test
-	public void add_watch_to_wishlist()
+	public void add_watch_to_wishlist_TC011()
 	{
 		order.add_watch_to_wishlist(bag_name);
 	}

@@ -36,12 +36,13 @@ public class SearchItems extends BaseTest{
 	
 		
 	@Test
-	public void add_item_to_cart(){	
+	public void add_item_to_cart_TC004()
+	{	
 		search.add_item_to_cart(item,item_name,item_type, size, color,quantity);
 	}
 	
 	@Test
-	public void checkout_items_in_cart() throws InterruptedException
+	public void checkout_items_in_cart_TC005() throws InterruptedException
 	{
 		Thread.sleep(2000);
 		String item_name = configReader.getProperty("item_name");
@@ -56,7 +57,7 @@ public class SearchItems extends BaseTest{
 	}
 	
 	@Test
-	public void add_item_to_wishlist()
+	public void add_item_to_wishlist_TC006()
 	{
 		search.add_item_to_wishlist(item, item_name, size, color, quantity);
 	}

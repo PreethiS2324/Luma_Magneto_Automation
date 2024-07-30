@@ -46,7 +46,7 @@ public class LoginPage extends BaseClass{
 	}
 	
 	public void sign_in(String email_address, String pwd) {
-		
+
 		driver.findElement(sign_in).click();
 		driver.findElement(email_id).sendKeys(email_address);
 		driver.findElement(pass).sendKeys(pwd);

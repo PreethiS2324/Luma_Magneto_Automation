@@ -29,7 +29,7 @@ public class ChangeDetailsPage extends BaseClass {
 	By lastname = By.id("lastname");
 	By save_button = By.xpath("//span[contains(text(),'Save')]");
 	By email = By.id("email");
-	By change_email = By.id("change_email");
+	By change_email = By.xpath("//input[@name='change_email']");
 	By current_pwd= By.id("current-password");
 	By new_pwd = By.id("password");
 	By confirm_new_pwd = By.id("password-confirmation");
@@ -45,13 +45,17 @@ public class ChangeDetailsPage extends BaseClass {
 
      public void add_address() {
 		
+    	driver.findElement(street_address).click();
 		driver.findElement(street_address).sendKeys(new_street);
 		Select sel_country = new Select(driver.findElement(country_dropdown));
 		sel_country.selectByVisibleText(new_country);
 		Select sel_state = new Select(driver.findElement(state_dropdown));
 		sel_state.selectByVisibleText(new_state);
+		driver.findElement(city).clear();
 		driver.findElement(city).sendKeys(new_city);
+		driver.findElement(postcode).clear();
 		driver.findElement(postcode).sendKeys(new_pincode);
+		driver.findElement(phoneNumber).clear();
 		driver.findElement(phoneNumber).sendKeys(new_phoneNumber);
 		driver.findElement(save_address).click();
 		
@@ -62,7 +66,9 @@ public class ChangeDetailsPage extends BaseClass {
     	 driver.findElement(menu).click();
     	 driver.findElement(my_account_tab).click();
     	 driver.findElement(edit_contact).click();
+    	 driver.findElement(firstname).clear();
     	 driver.findElement(firstname).sendKeys(first_name);
+    	 driver.findElement(lastname).clear();
     	 driver.findElement(lastname).sendKeys(last_name);
     	 driver.findElement(save_button).click();
     	 
@@ -94,19 +100,21 @@ public class ChangeDetailsPage extends BaseClass {
      }
      
      
-     public void change_billing_address()
+     public void change_billing_address() throws InterruptedException
      {
     	 driver.findElement(menu).click();
     	 driver.findElement(my_account_tab).click();
+    	 Thread.sleep(2000);
     	 driver.findElement(manage_address).click();
     	 driver.findElement(change_billing_address).click();
     	 add_address();
      }
      
-     public void change_shipping_address()
+     public void change_shipping_address() throws InterruptedException
      {
     	 driver.findElement(menu).click();
     	 driver.findElement(my_account_tab).click();
+    	 Thread.sleep(2000);
     	 driver.findElement(manage_address).click();
     	 driver.findElement(change_shipping_address).click();
     	 add_address();

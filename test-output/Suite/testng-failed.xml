@@ -3,36 +3,34 @@
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Test(failed)">
     <classes>
-      <class name="testcases.SearchItems">
+      <class name="testcases.CheckoutItems">
         <methods>
-          <include name="checkout_items_in_cart"/>
-          <include name="address"/>
+          <include name="order_bags_TC009"/>
+          <include name="add_watch_to_wishlist_TC011"/>
           <include name="setUpSuite"/>
-          <include name="add_item_to_cart"/>
-          <include name="add_item_to_wishlist"/>
+          <include name="order_fitness_equipment_TC008"/>
+          <include name="add_bag_to_wishlist_TC010"/>
           <include name="tearDownSuite"/>
+          <include name="add_fitness_equipment_to_wishlist_TC012"/>
         </methods>
-      </class> <!-- testcases.SearchItems -->
-      <class name="testcases.OrderItems">
+      </class> <!-- testcases.CheckoutItems -->
+      <class name="testcases.ChangeDetails">
         <methods>
-          <include name="order_tops_bottom"/>
-          <include name="order_fitness_equipment"/>
-          <include name="add_watch_to_wishlist"/>
-          <include name="order_watches"/>
-          <include name="address"/>
+          <include name="change_billing_address_TC016"/>
           <include name="setUpSuite"/>
-          <include name="order_bags"/>
-          <include name="add_bag_to_wishlist"/>
-          <include name="add_fitness_equipment_to_wishlist"/>
           <include name="tearDownSuite"/>
+          <include name="change_shipping_address_TC017"/>
         </methods>
-      </class> <!-- testcases.OrderItems -->
-      <class name="testcases.Login">
+      </class> <!-- testcases.ChangeDetails -->
+      <class name="testcases.GetDetails">
         <methods>
+          <include name="get_items_in_wishlist_TC020"/>
+          <include name="get_cart_subtotal_TC026"/>
+          <include name="setUpSuite"/>
           <include name="tearDownSuite"/>
-          <include name="closeBroswer"/>
+          <include name="get_ordered_items_TC019"/>
         </methods>
-      </class> <!-- testcases.Login -->
+      </class> <!-- testcases.GetDetails -->
     </classes>
   </test> <!-- Test(failed) -->
 </suite> <!-- Failed suite [Suite] -->

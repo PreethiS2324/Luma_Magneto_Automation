@@ -26,7 +26,7 @@ public class GetDetailsPage extends BaseClass {
 	By sale_menu = By.xpath("//a[@role='menuitem']/span[contains(text(),'Sale')]");
 	By cart_list = By.xpath("//ol[@id='mini-cart']/li");
 	By cart_price = By.xpath("//span[@class='price-wrapper']/span");
-	
+	By no_items_in_cart = By.xpath("//strong[contains(text(),'You have no items in your shopping cart.')]");
 	
 	
 	  public String get_account_name_and_email() throws InterruptedException
@@ -42,6 +42,8 @@ public class GetDetailsPage extends BaseClass {
 	  {
 		  Thread.sleep(2000);
 		  driver.findElement(menu).click();
+		  driver.findElement(my_account_tab).click();
+		  Thread.sleep(2000);
 		  driver.findElement(my_orders).click();
 		  int total_orders = driver.findElements(orders_items).size();
 		  ArrayList<String> orders = new ArrayList<String>();
@@ -61,6 +63,7 @@ public class GetDetailsPage extends BaseClass {
 		  driver.findElement(menu).click();
 		  ArrayList<String> wishlist = new ArrayList<String>();
 		  driver.findElement(my_account_tab).click();
+		  Thread.sleep(2000);
 		  driver.findElement(my_wishlist).click();
 		  int total = driver.findElements(total_items_in_wishlist).size();
 		  for(int i=1;i<=total;i++)
@@ -146,8 +149,12 @@ public class GetDetailsPage extends BaseClass {
 	  
 	  public String get_cart_subtotal()
 	  {
-		String cart_subtotal = driver.findElement(cart_price).getText();
-		  return cart_subtotal;
+		driver.findElement(cart).click();
+		String cart_subtotal = null;
+		boolean cart_item = driver.findElement(no_items_in_cart).isDisplayed();
+		if(!cart_item)
+			cart_subtotal = driver.findElement(cart_price).getText();	
+		 return cart_subtotal;
 		  
 	  }
 }

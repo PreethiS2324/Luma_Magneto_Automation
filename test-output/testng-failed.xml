@@ -1,19 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
-<suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
-  <test thread-count="5" name="Default test(failed)">
+<suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
+  <test thread-count="5" name="Test(failed)">
     <classes>
+      <class name="testcases.CheckoutItems">
+        <methods>
+          <include name="order_bags_TC009"/>
+          <include name="add_watch_to_wishlist_TC011"/>
+          <include name="setUpSuite"/>
+          <include name="order_fitness_equipment_TC008"/>
+          <include name="add_bag_to_wishlist_TC010"/>
+          <include name="tearDownSuite"/>
+          <include name="add_fitness_equipment_to_wishlist_TC012"/>
+        </methods>
+      </class> <!-- testcases.CheckoutItems -->
       <class name="testcases.ChangeDetails">
         <methods>
-          <include name="change_password_TC014"/>
+          <include name="change_billing_address_TC016"/>
           <include name="setUpSuite"/>
-          <include name="change_shipping_address_TC016"/>
-          <include name="change_billing_address_TC015"/>
-          <include name="change_account_name_TC012"/>
           <include name="tearDownSuite"/>
-          <include name="change_email_TC013"/>
+          <include name="change_shipping_address_TC017"/>
         </methods>
       </class> <!-- testcases.ChangeDetails -->
+      <class name="testcases.GetDetails">
+        <methods>
+          <include name="get_items_in_wishlist_TC020"/>
+          <include name="get_cart_subtotal_TC026"/>
+          <include name="setUpSuite"/>
+          <include name="tearDownSuite"/>
+          <include name="get_ordered_items_TC019"/>
+        </methods>
+      </class> <!-- testcases.GetDetails -->
     </classes>
-  </test> <!-- Default test(failed) -->
-</suite> <!-- Failed suite [Default suite] -->
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

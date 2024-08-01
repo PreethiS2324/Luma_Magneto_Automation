@@ -20,7 +20,7 @@ public class Address {
     
 
 	// Getters and Setters
-    public String getAddress() {
+    public String getStreet() {
         return street;
     }
 

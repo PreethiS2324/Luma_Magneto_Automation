@@ -4,8 +4,7 @@
   <test thread-count="5" name="Test">
 	<classes>
       <class name="testcases.Login"/>
-      <class name="testcases.SearchItems"/>
-      <class name="testcases.OrderItems"/>
+      <class name="testcases.CheckoutItems"/>
       <class name="testcases.ChangeDetails"/>
       <class name="testcases.GetDetails"/>
     </classes>

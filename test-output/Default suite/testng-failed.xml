@@ -3,17 +3,17 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="testcases.ChangeDetails">
+      <class name="testcases.CheckoutItem">
         <methods>
-          <include name="change_password_TC014"/>
+          <include name="add_bag_to_wishlist_TC010"/>
+          <include name="order_bags_TC009"/>
           <include name="setUpSuite"/>
-          <include name="change_shipping_address_TC016"/>
-          <include name="change_billing_address_TC015"/>
-          <include name="change_account_name_TC012"/>
+          <include name="login_method"/>
+          <include name="add_watch_to_wishlist_TC011"/>
+          <include name="add_fitness_equipment_to_wishlist"/>
           <include name="tearDownSuite"/>
-          <include name="change_email_TC013"/>
         </methods>
-      </class> <!-- testcases.ChangeDetails -->
+      </class> <!-- testcases.CheckoutItem -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
